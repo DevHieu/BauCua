@@ -1,0 +1,24 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  width: 9em;
+  height: 9em;
+  background-color: rgba(000, 000, 000, 0);
+  border: none;
+  &:hover {
+    background-color: rgba(000, 000, 000, 0.4);
+  }
+  &:active {
+    background-color: rgba(000, 000, 000, 0.6);
+  }
+  .name {
+    display: none;
+    color: rgb(137, 43, 156);
+  }
+  .hidden {
+    display: block;
+  }
+}
+.choose {
+  background-color: rgb(189 33 33 / 50%);
+}

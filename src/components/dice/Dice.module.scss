@@ -1,0 +1,70 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3em 0 0 6em;
+  .bowlDice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .bowl {
+      width: 15em;
+      margin-right: 10em;
+    }
+    .dices {
+      display: flex;
+      position: absolute;
+      margin-right: 9em;
+      .dice {
+        width: 4em;
+      }
+    }
+  }
+  .plate {
+    width: 16em;
+    position: relative;
+  }
+  .plateAnimation {
+    animation: diceShuffle 10s linear;
+  }
+  .shuffle {
+    // margin-right: 7em;
+    // width: 6em;
+    // height: 4em;
+    // font-size: 25px;
+    // font-weight: 500;
+    // color: white;
+    // background: #d34545;
+
+    width: 6em;
+    height: 4em;
+    font-size: 25px;
+    font-weight: 500;
+    color: white;
+    background: #d34545;
+    position: absolute;
+    position: absolute;
+    top: 20em;
+    &:hover {
+      background: #d32d2d;
+    }
+    &:active {
+      background: #cb1b1b;
+    }
+  }
+}
+
+@keyframes diceShuffle {
+  0% {
+    left: 0;
+  }
+  10% {
+    left: -25em;
+  }
+  90% {
+    left: -25em;
+  }
+  100% {
+    left: 0em;
+  }
+}

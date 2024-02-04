@@ -1,0 +1,14 @@
+.App {
+  .join_room {
+    display: block;
+  }
+  .gameDisplay {
+    display: block;
+    .room {
+      position: absolute;
+    }
+  }
+  .hidden {
+    display: none;
+  }
+}
