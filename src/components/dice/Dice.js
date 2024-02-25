@@ -1,39 +1,71 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./Dice.module.scss";
 
-export default function Dice() {
-  const [animation, isAnimation] = useState(false);
+export default function Dice({ socket, roomId, userName }) {
+  const [press, isPress] = useState(false);
   const dices = ["bau", "ca", "cua", "ga", "nai", "tom"];
-  const [dice1, setDice1] = useState(Math.floor(Math.random() * 6));
-  const [dice2, setDice2] = useState(Math.floor(Math.random() * 6));
-  const [dice3, setDice3] = useState(Math.floor(Math.random() * 6));
+  const [dice1, setDice1] = useState(0);
+  const [dice2, setDice2] = useState(0);
+  const [dice3, setDice3] = useState(0);
 
-  useEffect(() => {
-    handleAnimation();
-  }, []);
+  // const isMounted = useRef(false);
 
-  const handleAnimation = () => {
-    isAnimation(true);
+  // useEffect(() => {
+  //   if (isMounted.current) {
+  //     handleShuffle();
+  //   } else {
+  //     isMounted.current = true;
+  //   }
+  // }, []); // Empty dependency array ensures it only runs on mount and unmount
+
+  const handleShuffle = () => {
+    // when u click the button, it start shuffle and give the server data
+    socket.emit("start_Shuffle", { room: roomId, isShuffle: true });
+    isPress(true);
 
     setTimeout(() => {
-      setDice1(Math.floor(Math.random() * 6));
-      setDice2(Math.floor(Math.random() * 6));
-      setDice3(Math.floor(Math.random() * 6));
+      const dice = {
+        dice1: Math.floor(Math.random() * 6),
+        dice2: Math.floor(Math.random() * 6),
+        dice3: Math.floor(Math.random() * 6),
+      };
+
+      socket.emit("random_dice", { room: roomId, dice: dice });
+      setDice1(dice.dice1);
+      setDice2(dice.dice2);
+      setDice3(dice.dice3);
     }, 5000);
 
-    const time = setTimeout(() => {
-      isAnimation(false);
+    setTimeout(() => {
+      isPress(false);
     }, 10000);
-
-    return () => clearTimeout(time);
   };
+
+  useEffect(() => {
+    socket.on("start_Shuffle_toClient", (data) => {
+      isPress(data);
+
+      setTimeout(() => {
+        socket.on("random_dice_toClient", (data) => {
+          console.log(data);
+          setDice1(data.dice1);
+          setDice2(data.dice2);
+          setDice3(data.dice3);
+        });
+      }, 5000);
+
+      setTimeout(() => {
+        isPress(false);
+      }, 10000);
+    });
+  }, [socket]);
 
   return (
     <div className={styles.wrapper}>
       <button
-        disabled={animation}
-        onClick={handleAnimation}
+        disabled={press}
+        onClick={handleShuffle}
         className={styles.shuffle}
       >
         Shuffle
@@ -62,13 +94,9 @@ export default function Dice() {
         src="/img/plate.png"
         alt="plate"
         className={
-          animation ? `${styles.plate} ${styles.plateAnimation}` : styles.plate
+          press ? `${styles.plate} ${styles.plateAnimation}` : styles.plate
         }
       />
     </div>
   );
 }
-
-// dice1 = Math.floor(Math.random() * 6);
-// dice2 = Math.floor(Math.random() * 6);
-// dice3 = Math.floor(Math.random() * 6);
