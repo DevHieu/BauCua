@@ -1,50 +1,55 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./table.module.scss";
 import ChooseButton from "./ChooseButton/ChooseButton";
 
-export default function Table({ socket, roomId, userName }) {
-  const player = "hieu";
-  const [choose, setChoose] = useState("");
+export default function Table({
+  socket,
+  roomId,
+  money,
+  setMoney,
+  userName,
+  choose,
+  clear,
+  shuffle,
+}) {
+  const [chooseList, setChooseList] = useState([]);
+  const dices = ["nai", "bau", "ga", "ca", "cua", "tom"];
+
+  useEffect(() => {
+    if (shuffle) {
+      setTimeout(() => setChooseList([]), 11000);
+    }
+  }, [shuffle]);
+
+  useEffect(() => {
+    socket.on("start_Shuffle_toClient", (data) => {
+      setTimeout(() => {
+        setChooseList([]);
+      }, 10000);
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    choose(chooseList);
+  }, [choose, chooseList]);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.button}>
-        <ChooseButton
-          animal="nai"
-          socket={socket}
-          roomId={roomId}
-          userName={userName}
-        />
-        <ChooseButton
-          animal="bau"
-          socket={socket}
-          roomId={roomId}
-          userName={userName}
-        />
-        <ChooseButton
-          animal="ga"
-          socket={socket}
-          roomId={roomId}
-          userName={userName}
-        />
-        <ChooseButton
-          animal="ca"
-          socket={socket}
-          roomId={roomId}
-          userName={userName}
-        />
-        <ChooseButton
-          animal="cua"
-          socket={socket}
-          roomId={roomId}
-          userName={userName}
-        />
-        <ChooseButton
-          animal="tom"
-          socket={socket}
-          roomId={roomId}
-          userName={userName}
-        />
+        {dices.map((animal, index) => (
+          <ChooseButton
+            key={index}
+            animal={animal}
+            socket={socket}
+            roomId={roomId}
+            userName={userName}
+            money={money}
+            setMoney={setMoney}
+            chooseList={setChooseList}
+            clearHistory={clear}
+            shuffle={shuffle}
+          />
+        ))}
       </div>
       <img src="/img/BanBauCua.png" alt="baucua" className={styles.table} />
     </div>

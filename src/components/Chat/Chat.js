@@ -21,15 +21,15 @@ export default function Chat({ socket, roomId, userName }) {
       };
       await socket.emit("send_message", messageData);
       setMessageData((list) => [...list, messageData]);
+      setCurrentMessage("");
     }
   };
 
   useEffect(() => {
     socket.off("receive_message").on("receive_message", (data) => {
       setMessageData((list) => [...list, data]);
-      console.log(messageData);
     });
-  }, [socket, messageData]);
+  }, [socket]);
 
   return (
     <div className={styles.wrapper}>
