@@ -30,6 +30,7 @@ function App() {
       audio.loop = true;
       audio.volume = 1;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin]);
 
   //create an alt money object
