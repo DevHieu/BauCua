@@ -8,7 +8,7 @@ import Login from "./components/Login/Login";
 import "./App.scss";
 import sound from "./resource/audio/BackgroundMusic.mp3";
 
-const socket = io.connect("http://localhost:8000");
+const socket = io.connect("https://baucuaonl.netlify.app/");
 
 function App() {
   const audio = new Audio(sound);
@@ -18,7 +18,7 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [choose, setChoose] = useState([]);
   const [dices, setDices] = useState([]);
-  const [money, setMoney] = useState(1000);
+  const [money, setMoney] = useState(500);
   const [success, setSuccess] = useState(false);
   const [isShuffle, setIsShuffle] = useState(false);
   let currentMoney = money;
