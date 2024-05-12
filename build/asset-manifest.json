@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.113664b7.css",
+    "main.js": "/static/js/main.a05a0920.js",
+    "static/js/787.1e65764c.chunk.js": "/static/js/787.1e65764c.chunk.js",
+    "static/media/BackgroundMusic.mp3": "/static/media/BackgroundMusic.15527bbd709da10efff2.mp3",
+    "static/media/DiceShackingSound.mp3": "/static/media/DiceShackingSound.ff4d4b3d5b78c556ddca.mp3",
+    "index.html": "/index.html",
+    "main.113664b7.css.map": "/static/css/main.113664b7.css.map",
+    "main.a05a0920.js.map": "/static/js/main.a05a0920.js.map",
+    "787.1e65764c.chunk.js.map": "/static/js/787.1e65764c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.113664b7.css",
+    "static/js/main.a05a0920.js"
+  ]
+}
