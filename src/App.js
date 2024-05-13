@@ -8,7 +8,7 @@ import Login from "./components/Login/Login";
 import "./App.scss";
 import sound from "./resource/audio/BackgroundMusic.mp3";
 
-const socket = io.connect("https://baucuaonl.netlify.app/");
+const socket = io.connect(process.env.REACT_APP_PORT);
 
 function App() {
   const audio = new Audio(sound);
