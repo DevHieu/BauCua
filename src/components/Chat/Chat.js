@@ -52,6 +52,12 @@ export default function Chat({ socket, roomId, userName }) {
           onChange={(event) => {
             setCurrentMessage(event.target.value);
           }}
+          value={currentMessage}
+          onKeyPress={(event) => {
+            if (event.key === "Enter") {
+              sendMessage();
+            }
+          }}
         />
         <button
           onClick={() => {

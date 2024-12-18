@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 
@@ -7,6 +8,8 @@ import Chat from "./components/Chat/Chat";
 import Login from "./components/Login/Login";
 import "./App.scss";
 import sound from "./resource/audio/BackgroundMusic.mp3";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { CiMenuFries } from "react-icons/ci";
 
 const socket = io.connect(process.env.REACT_APP_URL);
 
@@ -15,6 +18,7 @@ function App() {
 
   const [room, setRoom] = useState("");
   const [name, setName] = useState("");
+  const [sidebar, setSidebar] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [choose, setChoose] = useState([]);
   const [dices, setDices] = useState([]);
@@ -30,19 +34,16 @@ function App() {
       audio.loop = true;
       audio.volume = 1;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin]);
 
   //create an alt money object
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     currentMoney = money;
   }, [money]);
 
   // plus money
   useEffect(() => {
     dices.forEach(prizes);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dices]);
 
   useEffect(() => {
@@ -77,23 +78,55 @@ function App() {
         <Login RoomId={setRoom} UserName={setName} isLogin={setIsLogin} />
       </div>
       <div className={!isLogin ? "gameDisplay hidden" : "gameDisplay"}>
-        <h4 className="room">ID room: {room}</h4>
-        <h4 className="money">money: {money}</h4>
-        <h4 className="volume">
-          audio:
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            onChange={(value) => {
-              handleVolume(value.target.value);
-            }}
-          ></input>
-        </h4>
-        <h4 onClick={handleOutGame} className="back">
-          Out room
-        </h4>
+        <div className="info-compu">
+          <h4 onClick={handleOutGame} className="back">
+            <IoMdArrowRoundBack size={20} /> Out room
+          </h4>
+          <h4 className="room">ID room: {room}</h4>
+          <h4 className="money">money: {money}</h4>
+          <h4 className="volume">
+            audio:
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              onChange={(value) => {
+                handleVolume(value.target.value);
+              }}
+            ></input>
+          </h4>
+        </div>
+        <div className="info-phone">
+          <div
+            className={sidebar ? "icon icon-extand" : "icon"}
+            onClick={() => setSidebar(!sidebar)}
+          >
+            <CiMenuFries size={32} />
+          </div>
+          <div className={sidebar ? "crop invalid" : "crop"}></div>
+          <div className={sidebar ? "sidebar extand" : "sidebar"}>
+            <div className="container">
+              <h4 onClick={handleOutGame} className="back">
+                <IoMdArrowRoundBack size={20} /> Out room
+              </h4>
+              <h4 className="room">ID room: {room}</h4>
+              <h4 className="money">money: {money}</h4>
+              <h4 className="volume">
+                audio:
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  onChange={(value) => {
+                    handleVolume(value.target.value);
+                  }}
+                ></input>
+              </h4>
+            </div>
+          </div>
+        </div>
         <Table
           socket={socket}
           roomId={room}

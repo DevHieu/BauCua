@@ -7,6 +7,9 @@
   background-color: rgba($color: #0d0f248a, $alpha: 0.35);
   width: 26em;
   max-height: 16em;
+  position: fixed;
+  bottom: 0;
+  left: 0;
   .PlayerChat {
     overflow: auto;
     scroll-behavior: smooth;
@@ -29,12 +32,12 @@
     .chat_box {
       box-sizing: border-box;
       background-color: rgba(13, 15, 36, 0.5);
-      width: 100%;
       border: none;
       color: wheat;
       border-top: solid 1px black;
       padding: 0.6em 0 0.6em 0.6em;
       resize: none;
+      width: 28em;
       &:focus {
         outline: none;
       }
@@ -46,6 +49,69 @@
       border: none;
       &:active {
         background-color: rgba(20, 22, 46, 0.877);
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: rgba($color: #0d0f248a, $alpha: 0.35);
+    width: 26em;
+    max-height: 16em;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    .PlayerChat {
+      overflow: auto;
+      scroll-behavior: smooth;
+      max-height: 10em;
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(30, 38, 47, 0.5);
+      }
+      .user {
+        color: lime;
+      }
+      .rival {
+        color: wheat;
+      }
+    }
+    .chat_footer {
+      display: flex;
+      .chat_box {
+        box-sizing: border-box;
+        background-color: rgba(13, 15, 36, 0.5);
+        border: none;
+        color: wheat;
+        border-top: solid 1px black;
+        padding: 0.6em 0 0.6em 0.6em;
+        resize: none;
+        width: 80%;
+        &:focus {
+          outline: none;
+        }
+      }
+      .sendButton {
+        background-color: rgba(20, 22, 46, 0.74);
+        color: wheat;
+        font-weight: 600;
+        border: none;
+        width: 20%;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: flex-start;
+        &:active {
+          background-color: rgba(20, 22, 46, 0.877);
+        }
       }
     }
   }

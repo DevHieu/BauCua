@@ -28,14 +28,6 @@
     animation: diceShuffle 10s linear;
   }
   .shuffle {
-    // margin-right: 7em;
-    // width: 6em;
-    // height: 4em;
-    // font-size: 25px;
-    // font-weight: 500;
-    // color: white;
-    // background: #d34545;
-
     width: 6em;
     height: 4em;
     font-size: 25px;
@@ -66,5 +58,73 @@
   }
   100% {
     left: 0em;
+  }
+}
+
+@media (max-width: 800px) {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    text-align: center;
+    .bowlDice {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .bowl {
+        width: 10em;
+        margin-right: 0;
+      }
+      .dices {
+        display: flex;
+        position: absolute;
+        margin: 0;
+        .dice {
+          width: 2.5em;
+        }
+      }
+    }
+    .plate {
+      width: 10em;
+      position: relative;
+    }
+    .plateAnimation {
+      animation: diceShuffle_Phone 10s linear;
+    }
+    .shuffle {
+      width: 4em;
+      height: 2em;
+      font-size: 25px;
+      font-weight: 500;
+      color: white;
+      background: #d34545;
+      position: absolute;
+      position: absolute;
+      top: 21.5em;
+      z-index: 5;
+      &:hover {
+        background: #d32d2d;
+      }
+      &:active {
+        background: #cb1b1b;
+      }
+    }
+  }
+}
+
+@keyframes diceShuffle_Phone {
+  0% {
+    top: 0;
+  }
+  10% {
+    top: -9em;
+  }
+  90% {
+    top: -9em;
+  }
+  100% {
+    top: 0em;
   }
 }

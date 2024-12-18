@@ -7,8 +7,14 @@
     position: absolute;
     grid-template-columns: auto auto auto;
   }
-  .money {
-    position: absolute;
-    margin-top: 20em;
+}
+
+@media (max-width: 800px) {
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    margin-top: 5em;
   }
 }
