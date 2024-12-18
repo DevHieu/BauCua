@@ -11,8 +11,6 @@ import sound from "./resource/audio/BackgroundMusic.mp3";
 const socket = io.connect(process.env.REACT_APP_URL);
 
 function App() {
-  console.log(process.env.REACT_APP_URL);
-
   const audio = new Audio(sound);
 
   const [room, setRoom] = useState("");
