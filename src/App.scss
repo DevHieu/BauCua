@@ -30,8 +30,11 @@
 
 @media (max-width: 800px) {
   .App {
+    .join_room {
+      display: block;
+    }
     .gameDisplay {
-      display: grid;
+      display: block;
       .info-compu {
         display: none;
       }
@@ -100,5 +103,8 @@
       width: 100%;
       transition: 350ms;
     }
+  }
+  .hidden {
+    display: none;
   }
 }
