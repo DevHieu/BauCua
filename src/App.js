@@ -8,9 +8,11 @@ import Login from "./components/Login/Login";
 import "./App.scss";
 import sound from "./resource/audio/BackgroundMusic.mp3";
 
-const socket = io.connect(process.env.REACT_APP_PORT);
+const socket = io.connect(process.env.REACT_APP_URL);
 
 function App() {
+  console.log(process.env.REACT_APP_URL);
+
   const audio = new Audio(sound);
 
   const [room, setRoom] = useState("");
@@ -54,9 +56,8 @@ function App() {
   }, [success]);
 
   const prizes = (value) => {
-    console.log(choose);
     if (choose.includes(value) === true) {
-      currentMoney += 100;
+      currentMoney += 200;
       setMoney(currentMoney);
     }
   };
