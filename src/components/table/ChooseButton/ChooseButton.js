@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import useDidMountEffect from "../../../hooks/useDidMountEffect";
 import styles from "./ChooseButton.module.scss";
 
 export default function ChooseButton({
@@ -35,7 +36,7 @@ export default function ChooseButton({
       animal: animal,
     };
 
-    await socket.emit("user_choose_" + animal, ChooseData);
+    await socket.emit("user_choose", ChooseData);
   };
 
   useEffect(() => {
@@ -63,14 +64,14 @@ export default function ChooseButton({
   }, [socket]);
 
   //clear player choice list
-  useEffect(() => {
+  useDidMountEffect(() => {
     if (clearHistory) {
       setChoose([]);
       setPlayerChoose(false);
     }
   }, [clearHistory]);
 
-  useEffect(() => {
+  useDidMountEffect(() => {
     if (shuffle) {
       setIsShuffle(true);
       setTimeout(() => {

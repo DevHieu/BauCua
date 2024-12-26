@@ -1,21 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import useDidMountEffect from "./hooks/useDidMountEffect";
 import io from "socket.io-client";
 
 import Table from "./components/table/table";
 import Dice from "./components/dice/Dice";
 import Chat from "./components/Chat/Chat";
 import Login from "./components/Login/Login";
+import ScoreBoard from "./components/ScoreBoard/ScoreBoard";
 import "./App.scss";
 import sound from "./resource/audio/BackgroundMusic.mp3";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { CiMenuFries } from "react-icons/ci";
 
-const socket = io.connect(process.env.REACT_APP_URL);
+const socket = io.connect(process.env.REACT_APP_URL, {
+  "force new connection": true,
+});
 
 function App() {
+  const bet = 100;
+  // const [bet, setBet] = useState(100);
   const audio = new Audio(sound);
-
   const [room, setRoom] = useState("");
   const [name, setName] = useState("");
   const [sidebar, setSidebar] = useState(false);
@@ -28,8 +33,7 @@ function App() {
   let currentMoney = money;
 
   useEffect(() => {
-    if (isLogin && room !== "") {
-      socket.emit("join_room", room);
+    if (isLogin) {
       audio.play();
       audio.loop = true;
       audio.volume = 1;
@@ -37,13 +41,41 @@ function App() {
   }, [isLogin]);
 
   //create an alt money object
-  useEffect(() => {
+  useDidMountEffect(() => {
     currentMoney = money;
   }, [money]);
 
-  // plus money
-  useEffect(() => {
-    dices.forEach(prizes);
+  // plus money when user win
+  let map = new Map();
+  let MoneyWin = 0;
+  const addMoney = () => {
+    for (let i = 0; i < dices.length; i++) {
+      if (choose.includes(dices[i]) === true) {
+        if (map.has(dices[i])) {
+          map.set(dices[i], map.get(dices[i]) + 1);
+        } else {
+          map.set(dices[i], 1);
+        }
+      }
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    for (let [key, value] of map) {
+      MoneyWin += bet + value * bet;
+    }
+    currentMoney += MoneyWin;
+    setMoney(currentMoney);
+    MoneyWin = 0;
+    map = new Map();
+  };
+
+  useDidMountEffect(async () => {
+    // react please run me if 'dices' changes, but not on initial render
+    await addMoney();
+    await socket.emit("update_money", {
+      room: room,
+      money: currentMoney,
+    });
   }, [dices]);
 
   useEffect(() => {
@@ -54,28 +86,33 @@ function App() {
     }
   }, [success]);
 
-  const prizes = (value) => {
-    if (choose.includes(value) === true) {
-      currentMoney += 200;
-      setMoney(currentMoney);
-    }
-  };
-
   const handleVolume = (value) => {
     audio.volume = value;
   };
 
   const handleOutGame = () => {
     socket.emit("leave_room", room);
+    setRoom("");
+    setName("");
     setIsLogin(false);
     audio.pause();
     audio.currentTime = 0;
+    setChoose([]);
+    setMoney(500);
+    setSidebar(false);
+    setSuccess(false);
+    setIsShuffle(false);
   };
 
   return (
     <div className="App">
       <div className={isLogin ? "join_room hidden" : "join_room"}>
-        <Login RoomId={setRoom} UserName={setName} isLogin={setIsLogin} />
+        <Login
+          socket={socket}
+          RoomId={setRoom}
+          UserName={setName}
+          isLogin={setIsLogin}
+        />
       </div>
       <div className={!isLogin ? "gameDisplay hidden" : "gameDisplay"}>
         <div className="info-compu">
@@ -127,6 +164,7 @@ function App() {
             </div>
           </div>
         </div>
+        <ScoreBoard socket={socket} roomId={room} shuffle={isShuffle} />
         <Table
           socket={socket}
           roomId={room}

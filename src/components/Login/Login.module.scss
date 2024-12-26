@@ -5,4 +5,11 @@
   height: 100vh;
   flex-direction: column;
   background: black;
+  color: white;
+  gap: 16px;
+  .logo {
+    width: 10em;
+    position: absolute;
+    top: 10%;
+  }
 }

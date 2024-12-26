@@ -36,11 +36,12 @@ export default function Dice({
       };
 
       socket.emit("random_dice", { room: roomId, dice: dice });
+      console.log({ room: roomId, dice: dice });
       randomDices([dices[dice.dice1], dices[dice.dice2], dices[dice.dice3]]);
       setDice1(dice.dice1);
       setDice2(dice.dice2);
       setDice3(dice.dice3);
-    }, 5000);
+    }, 4000);
 
     setTimeout(() => {
       shuffle(false);
@@ -52,27 +53,29 @@ export default function Dice({
   useEffect(() => {
     socket.on("start_Shuffle_toClient", (data) => {
       isPress(data);
-
       setTimeout(() => {
         diceAudio.play();
       }, 3000);
 
-      setTimeout(() => {
-        socket.on("random_dice_toClient", (data) => {
-          randomDices([
-            dices[data.dice1],
-            dices[data.dice2],
-            dices[data.dice3],
-          ]);
-          setDice1(data.dice1);
-          setDice2(data.dice2);
-          setDice3(data.dice3);
-        });
-      }, 5000);
+      socket.on("random_dice_toClient", (data) => {
+        console.log(data);
+        randomDices([dices[data.dice1], dices[data.dice2], dices[data.dice3]]);
+        setDice1(data.dice1);
+        setDice2(data.dice2);
+        setDice3(data.dice3);
+      });
 
       setTimeout(() => {
         isPress(false);
       }, 10000);
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    socket.on("reset_board", () => {
+      setDice1(0);
+      setDice2(0);
+      setDice3(0);
     });
   }, [socket]);
 

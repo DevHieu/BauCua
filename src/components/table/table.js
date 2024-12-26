@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import useDidMountEffect from "../../hooks/useDidMountEffect";
 import styles from "./table.module.scss";
 import ChooseButton from "./ChooseButton/ChooseButton";
 
@@ -15,7 +16,7 @@ export default function Table({
   const [chooseList, setChooseList] = useState([]);
   const dices = ["nai", "bau", "ga", "ca", "cua", "tom"];
 
-  useEffect(() => {
+  useDidMountEffect(() => {
     if (shuffle) {
       setTimeout(() => setChooseList([]), 11000);
     }
@@ -30,6 +31,12 @@ export default function Table({
   }, [socket]);
 
   useEffect(() => {
+    socket.on("reset_board", () => {
+      setChooseList([]);
+    });
+  }, [socket]);
+
+  useDidMountEffect(() => {
     choose(chooseList);
   }, [choose, chooseList]);
 
