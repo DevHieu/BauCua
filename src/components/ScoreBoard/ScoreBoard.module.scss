@@ -2,23 +2,106 @@
   position: absolute;
   top: 0;
   right: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: rgba(13, 15, 36, 0.4);
   padding: 0 3em 3em 3em;
-  .scoreBoard__content {
-    .first > span {
-      color: gold;
+  background-color: rgba(13, 15, 36, 0.4);
+  .pcUi {
+    display: flex;
+    flex-direction: column;
+    .scoreBoard__content {
+      .first > span {
+        color: gold;
+      }
+      .second > span {
+        color: silver;
+      }
+      .third > span {
+        color: #cb1111;
+      }
+      .scoreBoard__content__item {
+        color: #000;
+      }
     }
-    .second > span {
-      color: silver;
+  }
+
+  .mobileUi {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+    background-color: transparent;
+    .pcUi {
+      display: none;
     }
-    .third > span {
-      color: brown;
-    }
-    .scoreBoard__content__item {
-      color: #000;
+
+    .mobileUi {
+      display: block;
+      .icon {
+        position: relative;
+        margin: 1em;
+        cursor: pointer;
+        z-index: 11;
+        transition: 350ms;
+      }
+      .scoreBoard {
+        display: none;
+        width: 0;
+        height: 100vh;
+        background-color: rgba(13, 15, 36, 0.4);
+        padding: 3em 1em;
+        position: absolute;
+        top: 0;
+        right: 0;
+        text-align: left;
+        transition: 350ms;
+        z-index: 10;
+        .scoreBoard__title {
+          h3 {
+            color: white !important;
+          }
+        }
+        .scoreBoard__content {
+          .first > span {
+            color: gold;
+          }
+          .second > span {
+            color: silver;
+          }
+          .third > span {
+            color: #cb1111;
+          }
+          .scoreBoard__content__item {
+            color: white;
+            font-weight: 600;
+          }
+        }
+      }
+      .extand {
+        display: block;
+        width: 50vw;
+        transition: 350ms;
+        color: white;
+      }
+
+      .valid {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200vw;
+        height: 100vh;
+        transform: translateX(-100vw);
+        background-color: rgba($color: #0d0f24c4, $alpha: 0.35);
+        z-index: 8;
+      }
+      .invalid {
+        display: block !important;
+      }
     }
   }
 }

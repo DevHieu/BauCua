@@ -14,7 +14,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { CiMenuFries } from "react-icons/ci";
 
 const socket = io.connect(process.env.REACT_APP_URL, {
-  "force new connection": true,
+  transports: ["websocket"],
 });
 
 function App() {

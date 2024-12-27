@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import useDidMountEffect from "../../hooks/useDidMountEffect";
+import { CiMedal } from "react-icons/ci";
 import styles from "./ScoreBoard.module.scss";
 
 export default function ScoreBoard({ socket, roomId, shuffle }) {
+  const [isShow, setIsShow] = useState(false);
   const [first, setFirst] = useState("");
   const [second, setSecond] = useState("");
   const [third, setThird] = useState("");
@@ -99,24 +101,77 @@ export default function ScoreBoard({ socket, roomId, shuffle }) {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.scoreBoard__title}>
-        <h3>Score Board</h3>
+      <div className={styles.pcUi}>
+        <div className={styles.scoreBoard__title}>
+          <h3>Score Board</h3>
+        </div>
+        <div className={styles.scoreBoard__content}>
+          <div
+            className={`${styles.scoreBoard__content__item} ${styles.first}`}
+          >
+            <span>1st: {first}</span>
+          </div>
+          <div
+            className={`${styles.scoreBoard__content__item} ${styles.second}`}
+          >
+            <span>2nd: {second}</span>
+          </div>
+          <div
+            className={`${styles.scoreBoard__content__item} ${styles.third}`}
+          >
+            <span>3rd: {third}</span>
+          </div>
+          <div className={styles.scoreBoard__content__item}>
+            <span>4th: {fourth}</span>
+          </div>
+          <div className={styles.scoreBoard__content__item}>
+            <span>5th: {fifth}</span>
+          </div>
+        </div>
       </div>
-      <div className={styles.scoreBoard__content}>
-        <div className={`${styles.scoreBoard__content__item} ${styles.first}`}>
-          <span>1st: {first}</span>
+      <div className={styles.mobileUi}>
+        <div
+          className={isShow ? `${styles.icon} ${styles.extand} ` : styles.icon}
+          onClick={() => setIsShow(!isShow)}
+        >
+          <CiMedal size={32} />
         </div>
-        <div className={`${styles.scoreBoard__content__item} ${styles.second}`}>
-          <span>2nd: {second}</span>
-        </div>
-        <div className={`${styles.scoreBoard__content__item} ${styles.third}`}>
-          <span>3rd: {third}</span>
-        </div>
-        <div className={styles.scoreBoard__content__item}>
-          <span>4th: {fourth}</span>
-        </div>
-        <div className={styles.scoreBoard__content__item}>
-          <span>5th: {fifth}</span>
+        <div
+          className={
+            isShow ? `${styles.valid} ${styles.invalid} ` : styles.valid
+          }
+        ></div>
+        <div
+          className={
+            isShow ? `${styles.scoreBoard} ${styles.extand}` : styles.scoreBoard
+          }
+        >
+          <div className={styles.scoreBoard__title}>
+            <h3>Score Board</h3>
+          </div>
+          <div className={styles.scoreBoard__content}>
+            <div
+              className={`${styles.scoreBoard__content__item} ${styles.first}`}
+            >
+              <span>1st: {first}</span>
+            </div>
+            <div
+              className={`${styles.scoreBoard__content__item} ${styles.second}`}
+            >
+              <span>2nd: {second}</span>
+            </div>
+            <div
+              className={`${styles.scoreBoard__content__item} ${styles.third}`}
+            >
+              <span>3rd: {third}</span>
+            </div>
+            <div className={styles.scoreBoard__content__item}>
+              <span>4th: {fourth}</span>
+            </div>
+            <div className={styles.scoreBoard__content__item}>
+              <span>5th: {fifth}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
